@@ -15,17 +15,20 @@ class CarController extends Controller
      */
     public function index()
     {
-        return response()->json(Car::all());
-    }
+        return Car::with('carImages')->get()->map(function ($car) {
+            return [
+                'id' => $car->id,
+                'user_name' => $car->user->name,
+                'carData' => $car->carData,
+                'carImages' => $car->carImages,
+            ];
+        });
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        //return josn response
+        return response()->json([
+            'status' => 'success',
+            'data' => $cars,
+        ]);
     }
 
     /**
@@ -36,7 +39,13 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        //
+        $car = Car::create($request->validated());
+
+        //return josn response
+        return response()->json([
+            'status' => 'success',
+            'data' => $car,
+        ]);
     }
 
     /**
@@ -47,18 +56,7 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Car $car)
-    {
-        //
+        return response()->json($car->load('images'));
     }
 
     /**
@@ -70,7 +68,10 @@ class CarController extends Controller
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        //
+        $car->update($request->validated());
+        //add images to car
+        $car->images()->createMany($request->images);
+        return response()->json($car);
     }
 
     /**
@@ -81,6 +82,9 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        $car->delete();
+        //delete images from car
+        $car->images()->delete();
+        return response()->json(null, 204);
     }
 }

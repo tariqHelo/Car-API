@@ -3,6 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\{
+    AuthController,
+    CarController,
+    EngineTransmissionController,
+    InteriorElecticalsAirConditionerController,
+    SteeringSuspensionBrakesController,
+    CarSpaceController,
+    WheelController,
+};
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +28,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//route login and register
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class , 'login']);
 
-//route to get all cars
-Route::get('/cars', [App\Http\Controllers\CarController::class, 'index']);
+//add group auth middleware
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    //add resourceApi route
+    Route::apiResource('cars', CarController::class);
+
+    //add EngineTransmission route
+    Route::apiResource('engine-transmissions', EngineTransmissionController::class);
+
+    //add interiorElecticalsAirConditioner route
+    Route::apiResource('ieac', InteriorElecticalsAirConditionerController::class);
+
+    //add steeringSuspensionBrakes route
+    Route::apiResource('ssa', SteeringSuspensionBrakesController::class);
+
+    //add carSpace route
+    Route::apiResource('car-spaces', CarSpaceController::class);
+
+    //add wheel route
+    Route::apiResource('wheels', WheelController::class);
+
+    //add logout route
+    Route::post('/logout', [AuthController::class , 'logout']);
+});

@@ -44,6 +44,15 @@ return [
             'throw' => false,
         ],
 
+        //add upload disk
+        'upload' => [
+            'driver' => 'local',
+            'root' => public_path('upload'),
+            'url' => env('APP_URL').'/upload',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

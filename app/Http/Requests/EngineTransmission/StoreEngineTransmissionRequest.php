@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\EngineTransmission;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCarRequest extends FormRequest
+class StoreEngineTransmissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateCarRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateCarRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            //array json validation
+            //validate $request->data as array
+
         ];
     }
 }

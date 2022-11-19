@@ -10,36 +10,80 @@ class Car extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'summary',
-        'dna',
-        'exterior',
-        'tires_brakes',
-        'electronics',
-        'road_test',
-        'images',
+        'user_id',
+        'engine_transmission_id',
+        'interior_electicals_air_conditioner_id',
+        'steering_suspension_brake_id',
+        'car_space_id',
+        'wheel_id',
     ];
 
-    //cast json columns to array
-    protected $casts = [
-        'summary' => 'array',
-        'dna' => 'array',
-        'exterior' => 'array',
-        'tires_brakes' => 'array',
-        'electronics' => 'array',
-        'road_test' => 'array',
-        'images' => 'array',
-    ];
-
-    //add accessor to get summary data
-    public function getSummaryAttribute($value)
+    public function getDataAttribute($value)
     {
-        return json_decode($value);
+        return json_decode($value , true);
     }
 
-    //add accessor to get car DNA
-    public function getDnaAttribute($value)
+    public function engineTransmission()
     {
-        return json_decode($value);
+        return $this->belongsTo(EngineTransmission::class);
     }
+
+    public function interiorElecticalsAirConditioner()
+    {
+        return $this->belongsTo(InteriorElecticalsAirConditioner::class);
+    }
+
+    public function steeringSuspensionBrake()
+    {
+        return $this->belongsTo(SteeringSuspensionBrakes::class);
+    }
+
+    public function carSpace()
+    {
+        return $this->belongsTo(CarSpace::class);
+    }
+
+    public function wheel()
+    {
+        return $this->belongsTo(Wheel::class);
+    }
+
+    //convert json data to array and return it
+    public function getCarDataAttribute()
+    {
+        return [
+            'engineTransmission' => $this->engineTransmission->getDataAttribute($this->engineTransmission->data),
+            'interiorElecticalsAirConditioner' => $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data),
+            'steeringSuspensionBrake' => $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data),
+            'carSpace' => $this->carSpace->getDataAttribute($this->carSpace->data),
+            'wheel' => $this->wheel->getDataAttribute($this->wheel->data),
+        ];
+    }
+
+    public function carImages()
+    {
+        return $this->hasMany(CarImage::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    //add global scope to get user_id from auth user
+    protected static function booted()
+    {  
+        //auto store user_id when create new car
+        static::creating(function ($car) {
+            $car->user_id = auth()->user()->id;
+        });
+
+        // static::addGlobalScope('user_id', function ($query) {
+        //     $query->where('user_id', auth()->user()->id);
+        // });
+    }
+
+
+
 }
+
+
