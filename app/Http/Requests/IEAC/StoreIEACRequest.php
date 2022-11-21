@@ -24,7 +24,9 @@ class StoreIEACRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required|array',
+            'car_id' => 'required|integer',
+            //validate inputs array
+            'inputs' => 'required|array',
 
         ];
     }

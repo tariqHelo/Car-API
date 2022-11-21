@@ -53,8 +53,8 @@ class Car extends Model
     {
         return [
             'engineTransmission' => $this->engineTransmission->getDataAttribute($this->engineTransmission->data),
-            'interiorElecticalsAirConditioner' => $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data),
-            'steeringSuspensionBrake' => $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data),
+            'IEAC' => $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data),
+            'SSB' => $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data),
             'carSpace' => $this->carSpace->getDataAttribute($this->carSpace->data),
             'wheel' => $this->wheel->getDataAttribute($this->wheel->data),
         ];
@@ -77,9 +77,9 @@ class Car extends Model
             $car->user_id = auth()->user()->id;
         });
 
-        // static::addGlobalScope('user_id', function ($query) {
-        //     $query->where('user_id', auth()->user()->id);
-        // });
+        static::addGlobalScope('user_id', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        });
     }
 
 

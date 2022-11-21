@@ -27,4 +27,11 @@ class InteriorElecticalsAirConditioner extends Model
     {
         return json_decode($value , true);
     }
+
+    //find parameter car_id withoutglobal scope and return true if it exists
+    // public function carExists($car_id)
+    // {
+    //     return Car::withoutGlobalScope('car_id')->find($car_id);
+    // }
+
 }

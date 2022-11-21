@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1\Inspecter;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CarSpace\StoreCarSpaceRequest;
 use App\Http\Requests\CarSpace\UpdateCarSpaceRequest;
 use App\Models\CarSpace;
@@ -10,25 +11,7 @@ use App\Models\Car;
 
 class CarSpaceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -39,26 +22,25 @@ class CarSpaceController extends Controller
     public function store(StoreCarSpaceRequest $request)
     {
         //store the data
-        $carSpace = CarSpace::create($request->validated());
-
-        //store $carSpace->id in car table
-        $car = Car::where('user_id', auth()->user()->id)
-             ->where('status', 'pending')->first();
-
-        if ($car === null) {
-            $car = Car::create([
-                'car_space_id' => $carSpace->id,
+        // $validated = $request->validated();?
+        $validated = $request->validated();
+        $car = Car::withoutGlobalScopes()->find($validated['car_id']);  
+        if($car){
+            $carSpace = CarSpace::create([
+                'data' => json_encode($validated['inputs']),
             ]);
-        } else {
             $car->car_space_id = $carSpace->id;
             $car->save();
+        }else{
+            return response()->json([
+                'message' => 'car not found'
+            ]);
         }
-
         return response()->json([
+            'car_id' => $car->id,
             'status' => 'success',
             'message' => 'Car Space data stored successfully',
-            // 'data' => json_decode($carSpace->data),
-        ], 201);
+        ]);
     }
 
     /**

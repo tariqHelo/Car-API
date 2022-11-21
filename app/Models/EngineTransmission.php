@@ -18,7 +18,7 @@ class EngineTransmission extends Model
         'data' => 'array',
     ];
 
-     public function cars()
+    public function cars()
     {
         return $this->hasMany(Car::class);
     }
@@ -26,5 +26,15 @@ class EngineTransmission extends Model
     public function getDataAttribute($value)
     {
         return json_decode($value , true);
+    }
+
+    //check if data is have image in json data add full url to it
+    public function getFullUrlAttribute()
+    {
+        $data = $this->getDataAttribute($this->data);
+        if (isset($data['image'])) {
+            $data['image'] = url($data['image']);
+        }
+        return $data;
     }
 }

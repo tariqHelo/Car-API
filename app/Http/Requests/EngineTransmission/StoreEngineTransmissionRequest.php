@@ -24,8 +24,10 @@ class StoreEngineTransmissionRequest extends FormRequest
     public function rules()
     {
         return [
-            //array json validation
-            //validate $request->data as array
+            //validate data array
+             'inputs' => 'required|array',
+             //'data.*.engine' => 'required|string',
+            // 'data.*.transmission' => 'required|string',
 
         ];
     }
