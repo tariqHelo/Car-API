@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\v1\Dealer;
 
-use App\Models\v1\Dealer\DealerController;
+use App\Http\Controllers\Controller;
+
+use App\Models\Car;
 use Illuminate\Http\Request;
 
-class DealerControllerController extends Controller
+class DealersController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -65,6 +65,19 @@ class Car extends Model
         return $this->hasMany(CarImage::class);
     }
 
+    //check if the carImage have linke http or not
+    // public function getCarImagesAttribute()
+    // {
+    //     $carImages = $this->carImages;
+    //    // dd($carImages);
+    //     foreach ($carImages as $carImage) {
+    //         if (strpos($carImage->image, 'http') === false) {
+    //             $carImage->image = asset('storage/' . $carImage->image);
+    //         }
+    //     }
+    //     return $carImages;
+    // }
+
     public function user()
     {
         return $this->belongsTo(User::class);

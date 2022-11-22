@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('type', ['admin', 'inspecter', 'dealer'])->after('email')->default('dealer');
         });
+
     }
 
     /**
@@ -27,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('type');
+        });
     }
 };

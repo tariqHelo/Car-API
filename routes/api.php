@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\v1\AuthController;
-use App\Http\Controllers\v1\Admin\AdminCarsReqeustConctoller;
+use App\Http\Controllers\v1\Admin\{AdminCarsReqeustConctoller,UsersController};
 //use CarImageController for store car images
 use App\Http\Controllers\v1\Inspecter\CarImageController;
 //use dealer controller for store dealer
-use App\Http\Controllers\v1\Dealer\DealerControllerController;
+use App\Http\Controllers\v1\Dealer\DealersController;
 
 
 
@@ -40,10 +40,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 //add group with prefix api with v1 version
-
-
-
-
 Route::group(['prefix' => 'v1'], function () {
 
     //route test for api
@@ -60,6 +56,7 @@ Route::group(['prefix' => 'v1'], function () {
             
             //route group for inspecter
             Route::group(['prefix' => 'inspecter'], function () {
+
                  //add resourceApi route
                 Route::apiResource('cars', CarController::class);
 
@@ -79,11 +76,14 @@ Route::group(['prefix' => 'v1'], function () {
                 Route::apiResource('wheels', WheelController::class);
 
                 //route for add car images
-                Route::post('/cars/{car}/images', [CarImageController::class, 'storeImages']);
-           });
+                Route::post('/cars/images', [CarImageController::class, 'storeImages']);
+            });
 
             //route group for admin 
             Route::group(['prefix' => 'admin'], function () {
+
+                //route get all users
+                Route::apiResource('/users', UsersController::class);
                 //add resourceApi route
                 Route::apiResource('cars', AdminCarsReqeustConctoller::class);
                 //route for approve car
@@ -97,7 +97,7 @@ Route::group(['prefix' => 'v1'], function () {
             //route group for dealer
             Route::group(['prefix' => 'dealer'], function () {
                 //add resourceApi route
-                Route::apiResource('cars', CarController::class);
+                Route::apiResource('cars', DealersController::class);
             });
             //add logout route
             Route::post('/logout', [AuthController::class , 'logout']);

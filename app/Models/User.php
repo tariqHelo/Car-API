@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -31,6 +32,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'email_verified_at',
     ];
 
     /**
@@ -46,5 +50,17 @@ class User extends Authenticatable
     public function cars()
     {
         return $this->hasMany(Car::class);
+    }
+
+    //get the cars data
+    public function getCarsAttribute()
+    {
+        return $this->cars()->get();
+    }
+
+    //get users type (admin or inspecter or dealer) from users table
+    public function scopeType($query, $type)
+    {
+        return $query->where('type', $type);
     }
 }

@@ -22,25 +22,27 @@ class CarImageController extends Controller
     public function storeImages(Request $request)
     {
         
-       // dd($request->all());
-        //add car images to uploads folder and store the path in database
         $carImages = [];
         foreach ($request->file('images') as $image) {
             //add add upload disk
-            $path = $image->store('uploads', 'public');
+            $path = $image->store('/',[
+                'disk' => 'uploads'
+            ]);
             $carImages[] = ['image' => $path];
             
         }
-       // dd($request->car_id);
-        
-       //store images in database with car id
         $car = Car::withoutGlobalScopes()->find($request->car_id);
-       // dd($car);
-        $car->carImages()->createMany($carImages);
-    
-        //return the car images
+        if($car){
+            $car->carImages()->createMany($carImages);
+            return response()->json([
+                //use  getCarImagesAttribute to get car images
+                'success' => true,
+                'message' => 'car images added successfully',
+            ]);
+        }
         return response()->json([
-            'carImages' => $carImages
-        ], 201);
+            'success' => false,
+            'message' => 'failed to add images'
+            ], 400);
     }
 }

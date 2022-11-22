@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            //add type user Admin and Inspecter and dealer 
             $table->rememberToken();
             $table->timestamps();
         });
