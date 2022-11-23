@@ -19,7 +19,8 @@ class CarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {  
+
         return Car::with('carImages')->get()->map(function ($car) {
             return [
                 'id' => $car->id,

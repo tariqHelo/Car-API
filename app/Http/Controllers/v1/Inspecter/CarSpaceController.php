@@ -24,23 +24,28 @@ class CarSpaceController extends Controller
         //store the data
         // $validated = $request->validated();?
         $validated = $request->validated();
-        $car = Car::withoutGlobalScopes()->find($validated['car_id']);  
+
+        $car = Car::withoutGlobalScopes()->find($validated['car_id']);
+       // dd($car);  
         if($car){
             $carSpace = CarSpace::create([
                 'data' => json_encode($validated['inputs']),
             ]);
-            $car->car_space_id = $carSpace->id;
-            $car->save();
+            //update car with new IEAC_id
+            $car->update([
+                'car_space_id' => $carSpace->id,
+            ]);
+            //return josn response
+            return response()->json([
+                'car_id' => $validated['car_id'],
+                'status' => 'success',
+                'message' => 'Car Space data stored successfully',
+            ],201);
         }else{
             return response()->json([
                 'message' => 'car not found'
             ]);
         }
-        return response()->json([
-            'car_id' => $car->id,
-            'status' => 'success',
-            'message' => 'Car Space data stored successfully',
-        ]);
     }
 
     /**

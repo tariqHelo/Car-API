@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Bid;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class StoreBidRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreBidRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'car_id' => 'required|exists:cars,id',
+            'user_id' => 'required|exists:users,id',
+            'bid' => 'required|numeric',
         ];
     }
 }

@@ -24,6 +24,6 @@ class Wheel extends Model
 
     public function getDataAttribute($value)
     {
-        return json_decode($value , true);
+        return json_decode($value , true) ?? [];
     }
 }

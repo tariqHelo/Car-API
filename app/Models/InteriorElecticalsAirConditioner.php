@@ -25,7 +25,7 @@ class InteriorElecticalsAirConditioner extends Model
 
     public function getDataAttribute($value)
     {
-        return json_decode($value , true);
+        return json_decode($value , true) ?? [];
     }
 
     //find parameter car_id withoutglobal scope and return true if it exists

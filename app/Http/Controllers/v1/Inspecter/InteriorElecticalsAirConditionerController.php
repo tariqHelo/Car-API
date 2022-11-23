@@ -23,30 +23,34 @@ class InteriorElecticalsAirConditionerController extends Controller
     {
         //validat key inputs in request
         $validated = $request->validated();
+        // $validated = json_encode($validated['inputs']);
+       // dd($validated);
 
 
-        $car = Car::withoutGlobalScopes()->find($validated['car_id']);  
+        $car = Car::withoutGlobalScopes()->find($validated['car_id']); 
+       // dd($car) ;
        // dd($car); 
         if($car){
             //create new IEAC
             $IEAC = InteriorElecticalsAirConditioner::create([
-                'data' => $validated['inputs'],
+                'data' => json_encode($validated['inputs']),
             ]);
             //update car with new IEAC_id
             $car->update([
                 'interior_electicals_air_conditioner_id' => $IEAC->id,
             ]);
+            //return josn response
+            return response()->json([
+                'car_id' => $validated['car_id'],
+                'status' => 'success',
+                'message' => 'Interior Electicals Air Conditioner data stored successfully',
+            ],201);
         }else{
             return response()->json([
                 'message' => 'you didint have IEAC before',
             ], 400);
         }
-        return response()->json([
-            'car_id' => $car->id,
-            'status' => 'success',
-            'message' => 'Interior Electicals Air Conditioner data stored successfully',
-            // 'data' => json_decode($ieac->data),
-        ], 201);
+     
     }
 
    

@@ -25,7 +25,7 @@ class EngineTransmission extends Model
 
     public function getDataAttribute($value)
     {
-        return json_decode($value , true);
+        return json_decode($value , true) ?? [];
     }
 
     //check if data is have image in json data add full url to it

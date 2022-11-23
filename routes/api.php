@@ -10,7 +10,10 @@ use App\Http\Controllers\v1\Admin\{AdminCarsReqeustConctoller,UsersController};
 //use CarImageController for store car images
 use App\Http\Controllers\v1\Inspecter\CarImageController;
 //use dealer controller for store dealer
-use App\Http\Controllers\v1\Dealer\DealersController;
+use App\Http\Controllers\v1\Dealer\{
+    BidController,
+    DealersController,
+};
 
 
 
@@ -98,6 +101,9 @@ Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'dealer'], function () {
                 //add resourceApi route
                 Route::apiResource('cars', DealersController::class);
+
+                //post data for car request when BidNow button clicked
+                Route::post('/cars/request', [BidController::class, 'requestCar']);
             });
             //add logout route
             Route::post('/logout', [AuthController::class , 'logout']);

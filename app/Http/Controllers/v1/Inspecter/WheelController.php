@@ -26,17 +26,19 @@ class WheelController extends Controller
             $wheel = Wheel::create([
                 'data' => json_encode($validated['inputs']),
             ]);
-            $car->wheel_id = $wheel->id;
-            $car->save();
+            //update car with new IEAC_id
+            $car->update([
+                'wheel_id' => $wheel->id,
+            ]);
+            return response()->json([
+                'car_id' => $validated['car_id'],
+                'status' => 'success',
+                'message' => 'Wheel data stored successfully',
+            ],201);
         }else{
             return response()->json([
                 'message' => 'car not found'
             ]);
         }
-        return response()->json([
-            'car_id' => $car->id,
-            'status' => 'success',
-            'message' => 'Wheel data stored successfully',
-        ]);
     }
 }

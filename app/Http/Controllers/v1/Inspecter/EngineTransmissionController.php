@@ -23,15 +23,14 @@ class EngineTransmissionController extends Controller
     public function store(StoreEngineTransmissionRequest $request)
     {
         
-      //   dd($request->data);
+       // dd($request->all());
 
         //validate data array 
-          $validatedData = $request->validated();
-
-        // $validatedData['image'] = $request->image->store('images/engineTransmission');
-
+          $validated = $request->validated();
+          $validated = json_encode($validated['inputs']);
+         // dd($validated);
         $engineTransmission = EngineTransmission::create([
-            'data' => json_encode($validatedData['inputs']),
+            'data' => $validated,
         ]);
         
         $car = Car::create([

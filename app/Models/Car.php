@@ -18,11 +18,6 @@ class Car extends Model
         'wheel_id',
     ];
 
-    public function getDataAttribute($value)
-    {
-        return json_decode($value , true);
-    }
-
     public function engineTransmission()
     {
         return $this->belongsTo(EngineTransmission::class);
@@ -48,15 +43,27 @@ class Car extends Model
         return $this->belongsTo(Wheel::class);
     }
 
+    //add relation bid in Model Car
+    public function bids()
+    {
+        return $this->hasMany(Bid::class);
+    }
+
     //convert json data to array and return it
     public function getCarDataAttribute()
     {
         return [
-            'engineTransmission' => $this->engineTransmission->getDataAttribute($this->engineTransmission->data),
-            'IEAC' => $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data),
-            'SSB' => $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data),
-            'carSpace' => $this->carSpace->getDataAttribute($this->carSpace->data),
-            'wheel' => $this->wheel->getDataAttribute($this->wheel->data),
+            //if forein key is null return null with getDatAttribute
+            'engine_transmission' => $this->engineTransmission ? $this->engineTransmission->getDataAttribute($this->engineTransmission->data) : null,
+            'interior_electicals_air_conditioner' => $this->interiorElecticalsAirConditioner ? $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data) : null,
+            'steering_suspension_brake' => $this->steeringSuspensionBrake ? $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data) : null,
+            'car_space' => $this->carSpace ? $this->carSpace->getDataAttribute($this->carSpace->data) : null,
+            'wheel' => $this->wheel ? $this->wheel->getDataAttribute($this->wheel->data) : null,
+            // 'engineTransmission' => $this->engineTransmission->getDataAttribute($this->engineTransmission->data),
+            // 'IEAC' => $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data),
+            // 'SSB' => $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data),
+            // 'carSpace' => $this->carSpace->getDataAttribute($this->carSpace->data),
+            // 'wheel' => $this->wheel->getDataAttribute($this->wheel->data),
         ];
     }
 
@@ -64,19 +71,6 @@ class Car extends Model
     {
         return $this->hasMany(CarImage::class);
     }
-
-    //check if the carImage have linke http or not
-    // public function getCarImagesAttribute()
-    // {
-    //     $carImages = $this->carImages;
-    //    // dd($carImages);
-    //     foreach ($carImages as $carImage) {
-    //         if (strpos($carImage->image, 'http') === false) {
-    //             $carImage->image = asset('storage/' . $carImage->image);
-    //         }
-    //     }
-    //     return $carImages;
-    // }
 
     public function user()
     {

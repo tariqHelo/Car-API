@@ -18,6 +18,7 @@ class DealersController extends Controller
     {
         $cars = Car::withoutGlobalScopes()->get()->map(function ($car) {
             return [
+                
                 'id' => $car->id,
                 'user_name' => $car->user->name,
                 'carData' => $car->carData,
@@ -27,73 +28,34 @@ class DealersController extends Controller
         //return all cars
         return response()->json([
             'status' => 'success',
+            'UserType' => 'Dealer',
             'cars' => $cars,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  //post data for car request when BidNow button clicked
     public function store(Request $request)
     {
-        //
+        $car = Car::withoutGlobalScopes()->find($request->car_id);
+        $car->update([
+            'status' => 'requested',
+            'dealer_id' => $request->user()->id,
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Car Requested Successfully',
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\v1\Dealer\DealerController  $dealerController
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DealerController $dealerController)
+    //car data for dealer when dealer click on car details
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\v1\Dealer\DealerController  $dealerController
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DealerController $dealerController)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\v1\Dealer\DealerController  $dealerController
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DealerController $dealerController)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\v1\Dealer\DealerController  $dealerController
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DealerController $dealerController)
-    {
-        //
+        $car = Car::withoutGlobalScopes()->find($id);
+        //add price to bid now button
+        $car->price = $car->carData->price;
+        return response()->json([
+            'status' => 'success',
+            'car' => $car,
+        ]);
     }
 }

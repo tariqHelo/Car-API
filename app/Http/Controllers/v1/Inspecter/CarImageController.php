@@ -36,6 +36,7 @@ class CarImageController extends Controller
             $car->carImages()->createMany($carImages);
             return response()->json([
                 //use  getCarImagesAttribute to get car images
+                'car_id' => $car->id,
                 'success' => true,
                 'message' => 'car images added successfully',
             ]);

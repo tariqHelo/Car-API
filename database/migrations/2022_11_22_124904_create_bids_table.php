@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('car_id');
             $table->unsignedBigInteger('user_id');
+
+            //add price column for bid 
+            // $table->integer('bid');
             $table->unsignedBigInteger('bid');
             $table->timestamps();
         });

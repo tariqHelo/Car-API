@@ -47,19 +47,22 @@ class SteeringSuspensionBrakesController extends Controller
                 $ssb = SteeringSuspensionBrakes::create([
                     'data' => json_encode($validated['inputs']),
                 ]);
-                $car->steering_suspension_brake_id = $ssb->id;
-                $car->save();
+                //update car with new IEAC_id
+                $car->update([
+                    'steering_suspension_brakes_id' => $ssb->id,
+                ]);
+
+                //return josn response
+                return response()->json([
+                    'car_id' => $validated['car_id'],
+                    'status' => 'success',
+                    'message' => 'Steering Suspension Brakes data stored successfully',
+                ],201);
          }else{
              return response()->json([
                  'message' => 'car not found'
              ]);
          }
-        return response()->json([
-            'car_id' => $car->id,
-            'status' => 'success',
-            'message' => 'Steering Suspension Brakes data stored successfully',
-            // 'data' => json_decode($ssb->data),
-        ], 201);
     }
 
     

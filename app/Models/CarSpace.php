@@ -26,6 +26,6 @@ class CarSpace extends Model
     //decode json data to array
     public function getDataAttribute($value)
     {
-        return json_decode($value , true);
+        return json_decode($value , true) ?? [];
     }
 }

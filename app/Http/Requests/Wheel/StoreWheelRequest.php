@@ -24,7 +24,8 @@ class StoreWheelRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required|array',
+            'inputs' => 'required|array',
+            'car_id' => 'required|integer',
 
         ];
     }

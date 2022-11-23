@@ -24,7 +24,9 @@ class StoreCarSpaceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'car_id' => 'required|integer',
+            'inputs' => 'required|array',
+
         ];
     }
 }
