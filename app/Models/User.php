@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'status',
         'type',
     ];
 
@@ -50,6 +52,12 @@ class User extends Authenticatable
     public function cars()
     {
         return $this->hasMany(Car::class);
+    }
+
+    //add realtion bid between user and car
+    public function bids()
+    {
+        return $this->hasMany(Bid::class);
     }
 
     //get the cars data

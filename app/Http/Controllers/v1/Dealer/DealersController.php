@@ -58,4 +58,28 @@ class DealersController extends Controller
             'car' => $car,
         ]);
     }
+
+  //search for car by name
+    public function search(Request $request)
+    {
+        //filter cars by model or brand or year inside json data
+        $cars = Car::withoutGlobalScopes()
+             ->where('car_data->model', 'like', '%' . $request->search . '%')
+            ->orWhere('car_data->brand', 'like', '%' . $request->search . '%')
+            ->orWhere('car_data->year', 'like', '%' . $request->search . '%')
+            ->get()->map(function ($car) {
+                return [
+                    'id' => $car->id,
+                    'user_name' => $car->user->name,
+                    'carData' => $car->carData,
+                    'carImages' => $car->carImages,
+                ];
+            });
+
+        return response()->json([
+            'status' => 'success',
+            'cars' => $cars,
+        ]);
+    }
+
 }

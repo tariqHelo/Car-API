@@ -21,7 +21,7 @@ class CarController extends Controller
     public function index()
     {  
 
-        return Car::with('carImages')->get()->map(function ($car) {
+        $cars = Car::with('carImages')->get()->map(function ($car) {
             return [
                 'id' => $car->id,
                 'user_name' => $car->user->name,
@@ -29,6 +29,13 @@ class CarController extends Controller
                 'carImages' => $car->carImages,
             ];
         });
+
+        //return all cars
+        return response()->json([
+            'status' => 'success',
+            'UserType' => 'Inspecter',
+            'cars' => $cars,
+        ]);
     }
 
     /**

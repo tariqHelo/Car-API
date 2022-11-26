@@ -72,4 +72,59 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    //resetPassword user
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'We can\'t find a user with that e-mail address.'
+            ], 404);
+        }
+
+        $user->sendPasswordResetNotification($user->createToken('authToken')->plainTextToken);
+
+        return response()->json([
+            'message' => 'We have e-mailed your password reset link!'
+        ], 200);
+    }
+
+    //newPassword user
+    public function newPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|string|confirmed'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'We can\'t find a user with that e-mail address.'
+            ], 404);
+        }
+
+        if ($request->token != $user->currentAccessToken()->plainTextToken) {
+            return response()->json([
+                'message' => 'This password reset token is invalid.'
+            ], 404);
+        }
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Your password has been reset!'
+        ], 200);
+
+
+    }
 }
