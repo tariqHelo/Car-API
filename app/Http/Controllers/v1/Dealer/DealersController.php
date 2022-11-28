@@ -16,7 +16,7 @@ class DealersController extends Controller
      */
     public function index()
     {
-        $cars = Car::withoutGlobalScopes()->get()->map(function ($car) {
+        $cars = Car::withoutGlobalScopes()->where('status', 'approved')->get()->map(function ($car) {
             return [
                 
                 'id' => $car->id,

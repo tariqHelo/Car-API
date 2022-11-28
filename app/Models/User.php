@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany(Bid::class);
     }
 
+    public function getCarImagesAttribute()
+    {
+        return $this->cars->carImages;
+    }  
+
     //get the cars data
     public function getCarsAttribute()
     {

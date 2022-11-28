@@ -85,7 +85,10 @@ class Car extends Model
         });
 
         static::addGlobalScope('user_id', function ($query) {
-            $query->where('user_id', auth()->user()->id);
+            //where type is inspecter
+            if (auth()->user()->type == 'inspecter') {
+                $query->where('user_id', auth()->user()->id);
+            }
         });
     }
 

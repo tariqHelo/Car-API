@@ -20,7 +20,7 @@ class CarController extends Controller
      */
     public function index()
     {  
-
+       
         $cars = Car::with('carImages')->get()->map(function ($car) {
             return [
                 'id' => $car->id,

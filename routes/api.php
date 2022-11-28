@@ -50,6 +50,9 @@ Route::group(['prefix' => 'v1'], function () {
         return response()->json(['message' => 'test api']);
     });
     //register user 
+    //route controller AuthController
+
+    
     Route::post('/register', [AuthController::class, 'register']);
     //login user
     Route::post('/login', [AuthController::class , 'login']);
@@ -67,13 +70,21 @@ Route::group(['prefix' => 'v1'], function () {
             //route get all users
             Route::apiResource('/users', UsersController::class);
             //add resourceApi route
-            Route::apiResource('cars', AdminCarsReqeustConctoller::class);
-            //route for approve car
-            Route::post('/cars/{car}/approve', [AdminCarsReqeustConctoller::class, 'approveCar'])->name('cars.approve');
-            //route for reject car
-            Route::post('/cars/{car}/reject', [AdminCarsReqeustConctoller::class, 'rejectCar'])->name('cars.reject');
-            //route for pending car
-            Route::post('/cars/{car}/pending', [AdminCarsReqeustConctoller::class, 'pendingCar'])->name('cars.pending');
+            Route::Controller(AdminCarsReqeustConctoller::class)->group(function () {
+                //route approve car
+                Route::post('/cars/approve/{id}', 'approveCar');
+                //pending cars
+                Route::post('/cars/pending/{id}', 'pendingCar')->name('cars.pending');
+                //route reject car
+                Route::post('/cars/reject/{id}', 'rejectCar');
+            });
+            // Route::apiResource('cars', ::class);
+            // //route for approve car
+            // Route::post('/cars/{car}/approve', [AdminCarsReqeustConctoller::class, 'approveCar'])->name('cars.approve');
+            // //route for reject car
+            // Route::post('/cars/{car}/reject', [AdminCarsReqeustConctoller::class, 'rejectCar'])->name('cars.reject');
+            // //route for pending car
+            // Route::post('/cars/{car}/pending', [AdminCarsReqeustConctoller::class, 'pendingCar'])->name('cars.pending');
         });
         
         //route group for inspecter
