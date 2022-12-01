@@ -23,11 +23,11 @@ class EngineTransmission extends Model
         return $this->hasMany(Car::class);
     }
 
+    //convert json data to array and return it
     public function getDataAttribute($value)
     {
-        return json_decode($value , true) ?? [];
-    }
-
+      return json_decode($value, true);
+    } 
     //check if data is have image in json data add full url to it
     public function getFullUrlAttribute()
     {

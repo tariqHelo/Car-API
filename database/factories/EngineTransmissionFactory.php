@@ -18,32 +18,23 @@ class EngineTransmissionFactory extends Factory
     {
         return [
             'data' => json_encode([
-                'make' => $this->faker->name,
-                'model' => $this->faker->name,
-                'year' => $this->faker->year,
-                'price' => $this->faker->randomNumber(5),
-                'engine' => $this->faker->name,
-                'transmission' => $this->faker->name,
-                'drive' => $this->faker->name,
-                'body_style' => $this->faker->name,
-                'fuel_economy' => $this->faker->name,
-                'ground_clearance' => $this->faker->randomNumber(4),
-                'cargo_volume' => $this->faker->randomNumber(4),
-                'fuel_tank' => $this->faker->randomNumber(4),
-                'seating' => $this->faker->randomNumber(2),
-                'standard_features' => $this->faker->name,
-                'optional_features' => $this->faker->name,
-                'warranty' => $this->faker->name,
-                //add type to summary
-                'type' => [
-                    'make' => $this->faker->name,
-                    'model' => $this->faker->name,
-                    'year' => $this->faker->year
-                ],
-                'wheels' => [
-                    'front' => $this->faker->name,
-                    'rear' => $this->faker->name,
-                ],
+                'Radiator_Condition' => $this->faker->randomElement(['Good','No Visible Faults','Needs Attention']),
+                'Engine_Noise' => $this->faker->randomElement(['Good', 'Tappet Noise']),
+                'Engine_Belts' => $this->faker->randomElement(['Good', 'No Visible Fault']),
+                'Engine_Idling' => $this->faker->randomElement(['Good', 'No Visible Fault']),
+                'Engine_Oil' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Engine_Oil_Level' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Engine_Oil_Pressure' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Battery_Condition' => $this->faker->randomElement(['Good', 'Weak']),
+                'Engine_Smoke' => $this->faker->randomElement(['Black', 'Needs Attention']),
+                'Gear_Lever' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                '4WD_System_Condition' => $this->faker->randomElement(['Good', 'N/A']),
+                'Radiator_Fan' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Coolant' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Coolant_Level' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Gear_Shifting' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Silencer' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Comments' => $this->faker->text,
             ]),
         ];
     }

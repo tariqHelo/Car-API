@@ -18,7 +18,8 @@ class CarImageFactory extends Factory
     {
         return [
             'car_id' => $this->faker->numberBetween(1, 10),
-            'image' => $this->faker->imageUrl(640, 480, 'cars', true),
+            //add faker image and save it in p    
+            'image' => $this->faker->imageUrl(640, 480, 'cars', true, 'Faker'),
         ];
     }
 }

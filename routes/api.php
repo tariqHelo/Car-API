@@ -70,21 +70,21 @@ Route::group(['prefix' => 'v1'], function () {
             //route get all users
             Route::apiResource('/users', UsersController::class);
             //add resourceApi route
-            Route::Controller(AdminCarsReqeustConctoller::class)->group(function () {
-                //route approve car
-                Route::post('/cars/approve/{id}', 'approveCar');
-                //pending cars
-                Route::post('/cars/pending/{id}', 'pendingCar')->name('cars.pending');
-                //route reject car
-                Route::post('/cars/reject/{id}', 'rejectCar');
-            });
-            // Route::apiResource('cars', ::class);
+            // Route::Controller(AdminCarsReqeustConctoller::class)->group(function () {
+            //     //route approve car
+            //     Route::post('/cars/approve/{id}', 'approveCar');
+            //     //pending cars
+            //     Route::post('/cars/pending/{id}', 'pendingCar')->name('cars.pending');
+            //     //route reject car
+            //     Route::post('/cars/reject/{id}', 'rejectCar');
+            // });
+            
             // //route for approve car
-            // Route::post('/cars/{car}/approve', [AdminCarsReqeustConctoller::class, 'approveCar'])->name('cars.approve');
-            // //route for reject car
-            // Route::post('/cars/{car}/reject', [AdminCarsReqeustConctoller::class, 'rejectCar'])->name('cars.reject');
-            // //route for pending car
-            // Route::post('/cars/{car}/pending', [AdminCarsReqeustConctoller::class, 'pendingCar'])->name('cars.pending');
+            Route::post('/cars/{car}/approve', [AdminCarsReqeustConctoller::class, 'approveCar'])->name('cars.approve');
+            //route for reject car
+            Route::post('/cars/{car}/reject', [AdminCarsReqeustConctoller::class, 'rejectCar'])->name('cars.reject');
+            //route for pending car
+            Route::post('/cars/{car}/pending', [AdminCarsReqeustConctoller::class, 'pendingCar'])->name('cars.pending');
         });
         
         //route group for inspecter
@@ -112,18 +112,29 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/cars/images', [CarImageController::class, 'storeImages']);
         });
         //route group for dealer
-        Route::group(['prefix' => 'dealer'], function () {
-            //add resourceApi route
-            Route::apiResource('cars', DealersController::class);
+        // Route::group(['prefix' => 'dealer'], function () {
+        //     //add resourceApi route
+        //     Route::apiResource('cars', DealersController::class);
 
-            //search data cars by name and model and year and price
-            Route::get('/cars/search', [DealersController::class, 'search']);
+        //     //search data cars by name and model and year and price
+        //     Route::get('/cars/search', [DealersController::class, 'search']);
 
-            //post data for car request when BidNow button clicked
-            Route::post('/cars/request', [BidController::class, 'requestCar']);
-        });
+        //     //post data for car request when BidNow button clicked
+        //     Route::post('/cars/request', [BidController::class, 'requestCar']);
+        // });
         //add logout route
         Route::post('/logout', [AuthController::class , 'logout']);
+    });
+
+    Route::group(['prefix' => 'dealer'], function () {
+        //add resourceApi route
+        Route::apiResource('cars', DealersController::class);
+
+        //search data cars by name and model and year and price
+        Route::get('/cars/search', [DealersController::class, 'search']);
+
+        //post data for car request when BidNow button clicked
+        Route::post('/cars/request', [BidController::class, 'requestCar']);
     });
 
 });

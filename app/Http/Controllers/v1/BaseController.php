@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class BaseController extends Controller
 {
     
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:admin');
+    // }
 
     //build function success response
     public function sendResponse($result, $message)

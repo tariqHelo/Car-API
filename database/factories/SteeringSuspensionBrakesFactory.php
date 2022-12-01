@@ -18,32 +18,15 @@ class SteeringSuspensionBrakesFactory extends Factory
     {
         return [
             'data' => json_encode([
-                'make' => $this->faker->name,
-                'model' => $this->faker->name,
-                'year' => $this->faker->year,
-                'price' => $this->faker->randomNumber(5),
-                'engine' => $this->faker->name,
-                'transmission' => $this->faker->name,
-                'drive' => $this->faker->name,
-                'body_style' => $this->faker->name,
-                'fuel_economy' => $this->faker->name,
-                'ground_clearance' => $this->faker->randomNumber(4),
-                'cargo_volume' => $this->faker->randomNumber(4),
-                'fuel_tank' => $this->faker->randomNumber(4),
-                'seating' => $this->faker->randomNumber(2),
-                'standard_features' => $this->faker->name,
-                'optional_features' => $this->faker->name,
-                'warranty' => $this->faker->name,
-                //add type to summary
-                'type' => [
-                    'make' => $this->faker->name,
-                    'model' => $this->faker->name,
-                    'year' => $this->faker->year
-                ],
-                'wheels' => [
-                    'front' => $this->faker->name,
-                    'rear' => $this->faker->name,
-                ],
+                'Brake_Pads' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Parking_Brake_Operations' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Shock_Absorber_Operation' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Steering_Alignment' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Brake_Discs_Or_Lining' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Suspension' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Steering_Operation' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Wheel_Alignment' => $this->faker->randomElement(['Good', 'Needs Attention']),
+                'Comments' => $this->faker->text,
             ]),
         ];
     }

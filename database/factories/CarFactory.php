@@ -16,8 +16,9 @@ class CarFactory extends Factory
      */
     public function definition()
     {
+        $name = ['BWM', 'AUDI' , 'MERCEDES', 'TOYOTA', 'HONDA', 'NISSAN', 'VOLKSWAGEN', 'FORD', 'ASTON MARTIN', 'BENT'];
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->randomElement($name),
             'user_id' => $this->faker->numberBetween(1, 10),
             'engine_transmission_id' => $this->faker->numberBetween(1, 10),
             'interior_electicals_air_conditioner_id' => $this->faker->numberBetween(1, 10),

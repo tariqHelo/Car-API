@@ -16,12 +16,25 @@ class DealersController extends Controller
      */
     public function index()
     {
+        
         $cars = Car::withoutGlobalScopes()->where('status', 'approved')->get()->map(function ($car) {
             return [
                 
                 'id' => $car->id,
                 'user_name' => $car->user->name,
-                'carData' => $car->carData,
+                'car_name' => $car->name,
+                //use getEngineTransmissionAttribute in Model Car
+              //  'engine_transmission' => $car->engine_transmission,
+                'car_data' =>$car->carData,
+
+
+                
+                // 'engine_transmission' => $car->engineTransmission->getDataAttribute($car->engineTransmission->data),
+                // 'interior_electicals_air_conditioner' => $car->interiorElecticalsAirConditioner->getDataAttribute($car->interiorElecticalsAirConditioner->data),
+                // 'steering_suspension_brake' =>  $car->steeringSuspensionBrake->getDataAttribute($car->steeringSuspensionBrake->data),
+                // 'car_space' => $car->carSpace->getDataAttribute($car->carSpace->data),
+                // 'wheel' =>  $car->wheel->getDataAttribute($car->wheel->data),
+
                 'carImages' => $car->carImages,
             ];
         });
@@ -50,12 +63,27 @@ class DealersController extends Controller
     //car data for dealer when dealer click on car details
     public function show($id)
     {
-        $car = Car::withoutGlobalScopes()->find($id);
-        //add price to bid now button
-        $car->price = $car->carData->price;
+        //find car by id when status approved
+        $car = Car::withoutGlobalScopes()->where('status', 'approved')->find($id);
+        //if car not found
+        if (!$car) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Car Not Found',
+            ]);
+        }
+        //return car data
         return response()->json([
             'status' => 'success',
-            'car' => $car,
+            'UserType' => 'Dealer',
+            'car' => [
+                'id' => $car->id,
+                'user_name' => $car->user->name,
+                'car_name' => $car->name,
+
+                'carData' => $car->carData,
+                'carImages' => $car->carImages,
+            ],
         ]);
     }
 
@@ -71,6 +99,8 @@ class DealersController extends Controller
                 return [
                     'id' => $car->id,
                     'user_name' => $car->user->name,
+                    'car_name' => $car->name,
+
                     'carData' => $car->carData,
                     'carImages' => $car->carImages,
                 ];

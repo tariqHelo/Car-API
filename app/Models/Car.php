@@ -49,23 +49,42 @@ class Car extends Model
         return $this->hasMany(Bid::class);
     }
 
-    //convert json data to array and return it
+    //engineTransmission multiple data
+    // public function getEngineTransmissionAttribute()
+    // {
+    //     return $this->engineTransmission->getDataAttribute($this->engineTransmission);
+    // }
+
     public function getCarDataAttribute()
     {
         return [
-            //if forein key is null return null with getDatAttribute
-            'engine_transmission' => $this->engineTransmission ? $this->engineTransmission->getDataAttribute($this->engineTransmission->data) : null,
+            'engine_transmission' => $this->engineTransmission ? $this->engineTransmission->getDataAttribute($this->engineTransmission->data): null,
             'interior_electicals_air_conditioner' => $this->interiorElecticalsAirConditioner ? $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data) : null,
             'steering_suspension_brake' => $this->steeringSuspensionBrake ? $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data) : null,
             'car_space' => $this->carSpace ? $this->carSpace->getDataAttribute($this->carSpace->data) : null,
             'wheel' => $this->wheel ? $this->wheel->getDataAttribute($this->wheel->data) : null,
-            // 'engineTransmission' => $this->engineTransmission->getDataAttribute($this->engineTransmission->data),
-            // 'IEAC' => $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data),
-            // 'SSB' => $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data),
-            // 'carSpace' => $this->carSpace->getDataAttribute($this->carSpace->data),
-            // 'wheel' => $this->wheel->getDataAttribute($this->wheel->data),
         ];
+
     }
+     
+     //object_to_array function
+     public function object_to_array($data)
+     {
+         if (is_array($data) || is_object($data)) {
+             $result = array();
+             foreach ($data as $key => $value) {
+                 $result[$key] = $this->object_to_array($value);
+             }
+             return $result;
+         }
+         return $data;
+     }
+
+    // //Convert getEngineTransmissionAttribute from object to array and return it
+    // public function getCarDataArrayAttribute()
+    // {
+    //     return (array) $this->getCarDataAttribute();
+    // }
 
     public function carImages()
     {
