@@ -18,7 +18,7 @@ class WheelFactory extends Factory
     {
         return [
             'data' => json_encode([
-                'name' => $this->faker->name,
+                // ['name' => $this->faker->name],
                 //add type to summary
                 'Front_Left' => [
                     'Manufacturer' => $this->faker->name,

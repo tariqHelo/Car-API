@@ -46,12 +46,17 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        $car = Car::create($request->validated());
-
-        //return josn response
+       //add data name and general info for car 
+        $car = Car::create([
+            'name' => $request->name,
+            'general_info' => json_encode($request->general_info),
+            // 'user_id' => $request->user()->id,
+        ]);
+        //return success message
         return response()->json([
             'status' => 'success',
-            'data' => $car,
+            'UserType' => 'Inspecter',
+            'message' => 'Car Added Successfully',
         ]);
     }
 

@@ -21,20 +21,12 @@ class DealersController extends Controller
             return [
                 
                 'id' => $car->id,
-                'user_name' => $car->user->name,
+                'user_name' => $car->user->name ?? 'Test',
                 'car_name' => $car->name,
-                //use getEngineTransmissionAttribute in Model Car
-              //  'engine_transmission' => $car->engine_transmission,
+               //get getGeneralInfoAttribute from Car Model
+               //decode general info
+                'general_info' => json_decode($car->general_info , true),
                 'car_data' =>$car->carData,
-
-
-                
-                // 'engine_transmission' => $car->engineTransmission->getDataAttribute($car->engineTransmission->data),
-                // 'interior_electicals_air_conditioner' => $car->interiorElecticalsAirConditioner->getDataAttribute($car->interiorElecticalsAirConditioner->data),
-                // 'steering_suspension_brake' =>  $car->steeringSuspensionBrake->getDataAttribute($car->steeringSuspensionBrake->data),
-                // 'car_space' => $car->carSpace->getDataAttribute($car->carSpace->data),
-                // 'wheel' =>  $car->wheel->getDataAttribute($car->wheel->data),
-
                 'carImages' => $car->carImages,
             ];
         });
@@ -80,7 +72,7 @@ class DealersController extends Controller
                 'id' => $car->id,
                 'user_name' => $car->user->name,
                 'car_name' => $car->name,
-
+                'general_info' => json_decode($car->general_info , true),
                 'carData' => $car->carData,
                 'carImages' => $car->carImages,
             ],
@@ -100,7 +92,7 @@ class DealersController extends Controller
                     'id' => $car->id,
                     'user_name' => $car->user->name,
                     'car_name' => $car->name,
-
+                    'general_info' => json_decode($car->general_info , true),
                     'carData' => $car->carData,
                     'carImages' => $car->carImages,
                 ];

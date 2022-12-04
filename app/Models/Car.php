@@ -16,7 +16,18 @@ class Car extends Model
         'steering_suspension_brake_id',
         'car_space_id',
         'wheel_id',
+        'general_info',
     ];
+
+    protected $casts = [
+        'general_info' => 'array',
+    ];
+
+    //decode general_info json data from car table
+    // public function getGeneralInfoAttribute($value)
+    // {
+    //     return json_decode($value , true);
+    // }
 
     public function engineTransmission()
     {
@@ -58,13 +69,13 @@ class Car extends Model
     public function getCarDataAttribute()
     {
         return [
+            
             'engine_transmission' => $this->engineTransmission ? $this->engineTransmission->getDataAttribute($this->engineTransmission->data): null,
             'interior_electicals_air_conditioner' => $this->interiorElecticalsAirConditioner ? $this->interiorElecticalsAirConditioner->getDataAttribute($this->interiorElecticalsAirConditioner->data) : null,
             'steering_suspension_brake' => $this->steeringSuspensionBrake ? $this->steeringSuspensionBrake->getDataAttribute($this->steeringSuspensionBrake->data) : null,
             'car_space' => $this->carSpace ? $this->carSpace->getDataAttribute($this->carSpace->data) : null,
             'wheel' => $this->wheel ? $this->wheel->getDataAttribute($this->wheel->data) : null,
         ];
-
     }
      
      //object_to_array function

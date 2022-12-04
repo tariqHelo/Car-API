@@ -18,15 +18,15 @@ class SteeringSuspensionBrakesFactory extends Factory
     {
         return [
             'data' => json_encode([
-                'Brake_Pads' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Parking_Brake_Operations' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Shock_Absorber_Operation' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Steering_Alignment' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Brake_Discs_Or_Lining' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Suspension' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Steering_Operation' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Wheel_Alignment' => $this->faker->randomElement(['Good', 'Needs Attention']),
-                'Comments' => $this->faker->text,
+                ['Brake_Pads' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Parking_Brake_Operations' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Shock_Absorber_Operation' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Steering_Alignment' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Brake_Discs_Or_Lining' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Suspension' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Steering_Operation' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                ['Wheel_Alignment' => $this->faker->randomElement(['Good', 'Needs Attention'])],
+                // ['Comments' => $this->faker->text],
             ]),
         ];
     }
