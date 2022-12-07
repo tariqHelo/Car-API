@@ -10,6 +10,7 @@ class Car extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'user_id',
         'engine_transmission_id',
         'interior_electicals_air_conditioner_id',
@@ -99,7 +100,7 @@ class Car extends Model
 
     public function carImages()
     {
-        return $this->hasMany(CarImage::class);
+        return $this->hasMany(CarImage::class)->select('image');
     }
 
     public function user()
@@ -111,22 +112,15 @@ class Car extends Model
     {  
         //auto store user_id when create new car
         static::creating(function ($car) {
-            $car->user_id = auth()->user()->id;
+            //add random number user_id
+            $car->user_id = random_int(1, 10);
         });
 
-        static::addGlobalScope('user_id', function ($query) {
-            //where type is inspecter
-            if (auth()->user()->type == 'inspecter') {
-                $query->where('user_id', auth()->user()->id);
-            }
-        });
+        // static::addGlobalScope('user_id', function ($query) {
+        //     //add defualt user_id to get all cars
+        //     $query->where('user_id', auth()->user()->id);
+        // });
     }
-
-
-    
-
-
-
 }
 
 

@@ -49,7 +49,7 @@ class SteeringSuspensionBrakesController extends Controller
                 ]);
                 //update car with new IEAC_id
                 $car->update([
-                    'steering_suspension_brakes_id' => $ssb->id,
+                    'steering_suspension_brake_id' => $ssb->id,
                 ]);
 
                 //return josn response

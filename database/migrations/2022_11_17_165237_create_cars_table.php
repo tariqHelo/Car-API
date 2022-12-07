@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreignId('engine_transmission_id')->constrained()->onDelete('cascade');
-            $table->foreignId('interior_electicals_air_conditioner_id')->constrained()->onDelete('cascade');
-            $table->foreignId('steering_suspension_brake_id')->constrained()->onDelete('cascade');
-            $table->foreignId('car_space_id')->constrained()->onDelete('cascade');
-            $table->foreignId('wheel_id')->constrained()->onDelete('cascade');
+            $table->foreignId('engine_transmission_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('interior_electicals_air_conditioner_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('steering_suspension_brake_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('car_space_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('wheel_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

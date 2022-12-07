@@ -24,6 +24,7 @@ use App\Http\Controllers\v1\Inspecter\{
     SteeringSuspensionBrakesController,
     CarSpaceController,
     WheelController,
+    GeneralInfoController
 };
 
 /*
@@ -88,29 +89,29 @@ Route::group(['prefix' => 'v1'], function () {
         });
         
         //route group for inspecter
-        Route::group(['prefix' => 'inspecter'], function () {
+        // Route::group(['prefix' => 'inspecter'], function () {
 
-                //add resourceApi route
-            Route::apiResource('cars', CarController::class);
+        //         //add resourceApi route
+        //     Route::apiResource('cars', CarController::class);
 
-            //add EngineTransmission route
-            Route::apiResource('engine-transmissions', EngineTransmissionController::class);
+        //     //add EngineTransmission route
+        //     Route::apiResource('engine-transmissions', EngineTransmissionController::class);
 
-            //add interiorElecticalsAirConditioner route
-            Route::apiResource('ieac', InteriorElecticalsAirConditionerController::class);
+        //     //add interiorElecticalsAirConditioner route
+        //     Route::apiResource('ieac', InteriorElecticalsAirConditionerController::class);
 
-            //add steeringSuspensionBrakes route
-            Route::apiResource('ssa', SteeringSuspensionBrakesController::class);
+        //     //add steeringSuspensionBrakes route
+        //     Route::apiResource('ssa', SteeringSuspensionBrakesController::class);
 
-            //add carSpace route
-            Route::apiResource('car-spaces', CarSpaceController::class);
+        //     //add carSpace route
+        //     Route::apiResource('car-spaces', CarSpaceController::class);
 
-            //add wheel route
-            Route::apiResource('wheels', WheelController::class);
+        //     //add wheel route
+        //     Route::apiResource('wheels', WheelController::class);
 
-            //route for add car images
-            Route::post('/cars/images', [CarImageController::class, 'storeImages']);
-        });
+        //     //route for add car images
+        //     Route::post('/cars/images', [CarImageController::class, 'storeImages']);
+        // });
         //route group for dealer
         // Route::group(['prefix' => 'dealer'], function () {
         //     //add resourceApi route
@@ -124,6 +125,33 @@ Route::group(['prefix' => 'v1'], function () {
         // });
         //add logout route
         Route::post('/logout', [AuthController::class , 'logout']);
+    });
+
+    Route::group(['prefix' => 'inspecter'], function () {
+
+            //add resourceApi route
+        Route::apiResource('cars', CarController::class);
+
+        //add route generate info car
+        Route::apiResource('generate-info', GeneralInfoController::class);
+
+        //add EngineTransmission route
+        Route::apiResource('engine-transmissions', EngineTransmissionController::class);
+
+        //add interiorElecticalsAirConditioner route
+        Route::apiResource('ieac', InteriorElecticalsAirConditionerController::class);
+
+        //add steeringSuspensionBrakes route
+        Route::apiResource('ssa', SteeringSuspensionBrakesController::class);
+
+        //add carSpace route
+        Route::apiResource('car-spaces', CarSpaceController::class);
+
+        //add wheel route
+        Route::apiResource('wheels', WheelController::class);
+
+        //route for add car images
+        Route::post('/cars/images', [CarImageController::class, 'storeImages']);
     });
 
     Route::group(['prefix' => 'dealer'], function () {

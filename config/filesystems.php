@@ -47,6 +47,8 @@ return [
         //add upload disk
         'uploads' => [
             'driver' => 'local',
+            //add storage page on the server to store images
+            'root' => storage_path('../public_html/uploads'),
             'root' => public_path('uploads'),
             'url' => env('APP_URL').'/uploads',
             'visibility' => 'public',

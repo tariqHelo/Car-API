@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('cars', function (Blueprint $table) {
            
             //add json general_info
-            $table->json('general_info')->nullable();
+            $table->json('general_info')->nullable()->after('id');
         
         });
     }

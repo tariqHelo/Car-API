@@ -20,34 +20,11 @@ class WheelFactory extends Factory
             'data' => json_encode([
                 // ['name' => $this->faker->name],
                 //add type to summary
-                'Front_Left' => [
-                    'Manufacturer' => $this->faker->name,
-                    'Model' => $this->faker->name,
-                    'Year' => $this->faker->year,
-                    'Size' => $this->faker->name,
-                    'Bolt_Pattern' => $this->faker->name,
-                ],
-                'Front_Right' => [
-                    'Manufacturer' => $this->faker->name,
-                    'Model' => $this->faker->name,
-                    'Year' => $this->faker->year,
-                    'Size' => $this->faker->name,
-                    'Bolt_Pattern' => $this->faker->name,
-                ],
-                'Rear_Left' => [
-                    'Manufacturer' => $this->faker->name,
-                    'Model' => $this->faker->name,
-                    'Year' => $this->faker->year,
-                    'Size' => $this->faker->name,
-                    'Bolt_Pattern' => $this->faker->name,
-                ],
-                'Rear_Right' => [
-                    'Manufacturer' => $this->faker->name,
-                    'Model' => $this->faker->name,
-                    'Year' => $this->faker->year,
-                    'Size' => $this->faker->name,
-                    'Bolt_Pattern' => $this->faker->name,
-                ],
+                'Front_Left' => $this->faker->name,
+                'Front_Right' => $this->faker->name,
+                'Rear_Left' => $this->faker->name,
+                'Rear_Right' => $this->faker->name,
+                'Spare' => $this->faker->name,
             ]),
         ];
     }

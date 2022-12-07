@@ -22,7 +22,7 @@ class DealersController extends Controller
                 
                 'id' => $car->id,
                 'user_name' => $car->user->name ?? 'Test',
-                'car_name' => $car->name,
+                'car_name' => $car->name ?? 'Test',
                //get getGeneralInfoAttribute from Car Model
                //decode general info
                 'general_info' => json_decode($car->general_info , true),
@@ -70,8 +70,8 @@ class DealersController extends Controller
             'UserType' => 'Dealer',
             'car' => [
                 'id' => $car->id,
-                'user_name' => $car->user->name,
-                'car_name' => $car->name,
+                'user_name' => $car->user->name ?? 'Test',
+                'car_name' => $car->name ?? 'Test',
                 'general_info' => json_decode($car->general_info , true),
                 'carData' => $car->carData,
                 'carImages' => $car->carImages,

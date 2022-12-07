@@ -21,28 +21,46 @@ class CarImageController extends Controller
      */
     public function storeImages(Request $request)
     {
-        
-        $carImages = [];
-        foreach ($request->file('images') as $image) {
-            //add add upload disk
-            $path = $image->store('/',[
-                'disk' => 'uploads'
-            ]);
-            $carImages[] = ['image' => $path];
-            
-        }
+
+        //recive images from request api React js
         $car = Car::withoutGlobalScopes()->find($request->car_id);
+         $values = $request->file('images');
+         $carImages = [];
+         if (is_array($values) || is_object($values))
+         {
+             foreach ($values as $value)
+             {
+                $path = $value->store('/',[
+                    'disk' => 'uploads'
+                ]);
+
+                $carImages[] = ['image' => $path];
+             }
+         }
+        // $carImages = [];
+        // // $values = get_values();
+        // foreach ($images as $image) {
+        //     //add add upload disk
+        //     $path = $image->store('/',[
+        //         'disk' => 'uploads'
+        //     ]);
+        //     $carImages[] = ['image' => $path];
+            
+        // }
         if($car){
             $car->carImages()->createMany($carImages);
             return response()->json([
                 //use  getCarImagesAttribute to get car images
                 'car_id' => $car->id,
+                'carImages' => $carImages,
+
                 'success' => true,
                 'message' => 'car images added successfully',
             ]);
         }
         return response()->json([
             'success' => false,
+            //display images
             'message' => 'failed to add images'
             ], 400);
     }

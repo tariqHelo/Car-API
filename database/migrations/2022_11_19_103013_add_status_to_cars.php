@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('cars', function (Blueprint $table) {
             //add enum column status after user_id column
-            $table->enum('status', ['pending', 'approved', 'rejected'])->after('user_id')->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->after('user_id')->default('approved');
         });
     }
 

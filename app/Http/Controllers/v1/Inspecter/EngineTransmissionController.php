@@ -27,22 +27,31 @@ class EngineTransmissionController extends Controller
 
         //validate data array 
           $validated = $request->validated();
-          $validated = json_encode($validated['inputs']);
+        //   $validated = json_encode($validated['inputs']);
          // dd($validated);
-        $engineTransmission = EngineTransmission::create([
-            'data' => $validated,
-        ]);
-        
-        $car = Car::create([
-            'engine_transmission_id' => $engineTransmission->id,
-        ]);
+         $car = Car::withoutGlobalScopes()->find($validated['car_id']); 
+         if($car){
+             //create new EngineTransmission
+             $EngineTransmission = EngineTransmission::create([
+                 'data' => json_encode($validated['inputs']),
+             ]);
+             //update car with new EngineTransmission_id
+             $car->update([
+                 'engine_transmission_id' => $EngineTransmission->id,
+             ]);
+             //return josn response
+             return response()->json([
+                 'car_id' => $validated['car_id'],
+                 'status' => 'success',
+                 'message' => 'Engine Transmission data stored successfully',
+             ],201);
 
-        //return josn response
-        return response()->json([
-            'car_id' => $car->id,
-            'status' => 'success',
-            'message' => 'Engine Transmission data stored successfully',
-        ],201);
+
+            }else{
+                return response()->json([
+                    'message' => 'you didint have Engine Transmission before',
+                ], 400);
+            }
     }
 
     /**

@@ -25,6 +25,8 @@ class StoreEngineTransmissionRequest extends FormRequest
     {
         return [
             //validate data array
+            //validate name car 
+            'car_id' => 'required|integer',
              'inputs' => 'required|array',
              //'data.*.engine' => 'required|string',
             // 'data.*.transmission' => 'required|string',
